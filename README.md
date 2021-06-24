@@ -1,2 +1,2 @@
-# push_box
+# pushbox
 Bridge DLNA to AppleTV obox

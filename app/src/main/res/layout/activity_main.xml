@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/bg"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <include layout="@layout/layout_action_bar"/>
+
+    <include layout="@layout/layout_version"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/content"
+        android:layout_width="400dp"
+        android:layout_height="300dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+        <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent" android:orientation="vertical" android:gravity="center" >
+
+
+            <EditText
+                android:id="@+id/url"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textColorHint="@color/colorHint"
+                android:backgroundTint="@android:color/white"
+                android:inputType="textUri"  android:hint="@string/obox_url_hint" ></EditText>
+
+
+
+            <LinearLayout android:gravity="center_vertical" android:id="@+id/save_btn" android:background="@drawable/remote_bg" android:focusable="true" android:nextFocusUp="@+id/volume" android:layout_width="302px" android:layout_height="118px" android:layout_marginTop="50px" android:paddingLeft="34px" android:paddingRight="34px" android:layout_alignParentBottom="true" android:layout_centerHorizontal="true" >
+                <ImageView android:layout_marginLeft="50px" android:layout_width="36px" android:layout_height="36px"  android:src="@drawable/save_icon" android:scaleType="fitXY"/>
+                <TextView android:textSize="30px" android:textColor="@color/white" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="24px" android:text="@string/save"/>
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
