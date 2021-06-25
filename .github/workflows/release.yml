@@ -41,6 +41,10 @@ jobs:
       - name: Fix Permission for sign apk
         run: sudo chown -R 777 app/build/outputs/apk/release
 
+      - name: machine ls app/build/outputs/apk/release
+        working-directory: "."
+        run: "ls -la app/build/outputs/apk/release"
+
       - uses: Tlaster/android-sign@v1.2.2
         name: Sign app APK
         with:
@@ -53,6 +57,10 @@ jobs:
           keyPassword: ${{ secrets.KEY_PASSWORD }}
         env:
           BUILD_TOOLS_VERSION: "29.0.2"
+
+      - name: machine ls signed
+        working-directory: "."
+        run: "ls -la signed"
 
       - name: Upload build-artifacts
         uses: skx/github-action-publish-binaries@master
