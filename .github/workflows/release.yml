@@ -42,9 +42,8 @@ jobs:
         with:
           releaseDirectory: |
             app/build/outputs/apk/release
-            app/build/outputs/bundle/release
           signingKeyBase64: ${{ secrets.SIGNING_KEY }}
-          output: app/build/outputs/apk/release/signed
+          output: ./signed
           alias: ${{ secrets.ALIAS }}
           keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
           keyPassword: ${{ secrets.KEY_PASSWORD }}
@@ -56,4 +55,4 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          args: "./app/build/outputs/apk/release/signed/*.apk"
+          args: "./signed/*.apk"
