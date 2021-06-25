@@ -38,7 +38,7 @@ jobs:
         with:
           args: "./gradlew assembleRelease"
 
-      - name: Build with Gradle
+      - name: Fix Permission for sign apk
         run: sudo chown -R 777 app/build/outputs/apk/release
 
       - uses: Tlaster/android-sign@v1.2.2
@@ -47,7 +47,7 @@ jobs:
           releaseDirectory: |
             app/build/outputs/apk/release
           signingKeyBase64: ${{ secrets.SIGNING_KEY }}
-          output: signed
+          output: ./signed
           alias: ${{ secrets.ALIAS }}
           keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
           keyPassword: ${{ secrets.KEY_PASSWORD }}
@@ -59,4 +59,4 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          args: "./signed/*.apk"
+          args: "./app/build/outputs/apk/release/*.apk"
