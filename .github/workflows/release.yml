@@ -8,7 +8,6 @@ on:
     types:
       - created
 
-
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
@@ -21,11 +20,28 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
+      - run: echo "VERSION=${GITHUB_REF/refs\/tags\/v/}" >> $GITHUB_ENV
+      - run: echo "BUILDDATE=$(date '+%F-%T')" >> $GITHUB_ENV
+      - run: echo "COMMIT=$(git rev-parse --verify HEAD)" >> $GITHUB_ENV
+      - run: echo "APP_NAME=$(echo '${{ github.repository }}' | awk -F '/' '{print $2}')" >> $GITHUB_ENV
+
+      - name: set up JDK 1.8
+        uses: actions/setup-java@v1
+        with:
+          java-version: 1.8
+
+      - name: Bump version
+        uses: chkfung/android-version-actions@v1.1
+        with:
+          gradlePath: app/build.gradle # or app/build.gradle.kts
+          versionCode: ${{github.run_number}}
+          versionName: ${{env.VERSION}}
+
       - name: "Build Android project"
         uses: vgaidarji/android-github-actions-build@v1.0.1
         with:
           args: "./gradlew assembleRelease"
-          
+
       - uses: Tlaster/android-sign@v1
         name: Sign app APK
         with:
@@ -38,8 +54,8 @@ jobs:
           keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
           keyPassword: ${{ secrets.KEY_PASSWORD }}
         env:
-          BUILD_TOOLS_VERSION: "30.0.2"
-          
+          BUILD_TOOLS_VERSION: "29.0.2"
+
       - name: Upload build-artifacts
         uses: skx/github-action-publish-binaries@master
         env:
